@@ -1,7 +1,7 @@
 import Head from "next/head";
 import LinkMenu from "../components/LinkMenu";
 
-const Home = () => {
+const About = () => {
   return (
     <>
       <Head>
@@ -10,10 +10,10 @@ const Home = () => {
       </Head>
       <main>
         <LinkMenu />
-        <h1>Next JS with TS and styled components setup</h1>
+        <h1>About Page</h1>
       </main>
     </>
   );
 };
 
-export default Home;
+export default About;
