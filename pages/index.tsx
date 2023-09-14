@@ -10,7 +10,9 @@ const Home = () => {
       </Head>
       <main>
         <LinkMenu />
-        <h1>Next JS with TS and styled components setup</h1>
+        {/* <section>
+          <h1>Next JS with TS and styled components setup</h1>
+        </section> */}
       </main>
     </>
   );
