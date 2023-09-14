@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
+interface OpenMenuProps {
+  isOpen: boolean;
+}
 
 const Navbar = styled.nav`
   position: fixed;
@@ -47,23 +51,61 @@ const HamburgerLines = styled.div`
     height: 23px;
     width: 35px;
     position: absolute;
-    top: 5px;
+    top: 15px;
     left: 20px;
     z-index: 2;
   }
 `;
 
-const Line = styled.span`
+const LineOne = styled.span<OpenMenuProps>`
   @media (max-width: 768px) {
     display: block;
     height: 4px;
     width: 100%;
     border-radius: 10px;
     background: #333;
+    transform-origin: 0% 0%;
+    transition: transform 0.4s ease-in-out;
+    ${({ isOpen }) =>
+      isOpen &&
+      css`
+        transform: rotate(35deg);
+      `}
+  }
+`;
+const LineTwo = styled.span<OpenMenuProps>`
+  @media (max-width: 768px) {
+    display: block;
+    height: 4px;
+    width: 100%;
+    border-radius: 10px;
+    background: #333;
+    transition: transform 0.2s ease-in-out;
+    ${({ isOpen }) =>
+      isOpen &&
+      css`
+        transform: scaleY(0);
+      `}
+  }
+`;
+const LineThree = styled.span<OpenMenuProps>`
+  @media (max-width: 768px) {
+    display: block;
+    height: 4px;
+    width: 100%;
+    border-radius: 10px;
+    background: #333;
+    transform-origin: 0% 100%;
+    transition: transform 0.4s ease-in-out;
+    ${({ isOpen }) =>
+      isOpen &&
+      css`
+        transform: rotate(-35deg);
+      `}
   }
 `;
 
-const MenuItems = styled.ul`
+const MenuItems = styled.ul<OpenMenuProps>`
   order: 2;
   display: flex;
   @media (max-width: 768px) {
@@ -75,9 +117,15 @@ const MenuItems = styled.ul`
     display: flex;
     flex-direction: column;
     margin-left: -40px;
+    margin-top: 0;
     padding-left: 50px;
     transition: transform 0.5s ease-in-out;
     box-shadow: 5px 0px 10px 0px #aaa;
+    ${({ isOpen }) =>
+      isOpen &&
+      css`
+        transform: translateX(0);
+      `}
   }
 `;
 
@@ -131,15 +179,22 @@ const Logo = styled.h1`
 `;
 
 const LinkMenu: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <Navbar className="navbar">
-      <NavbarContainer className="navbar-container container">
-        <HamburgerLines className="hamburger-lines">
-          <Line className="line line1"></Line>
-          <Line className="line line2"></Line>
-          <Line className="line line3"></Line>
+    <Navbar>
+      <NavbarContainer>
+        <HamburgerLines
+          onClick={() => {
+            setIsOpen(!isOpen);
+            console.log("clicked", isOpen);
+          }}
+        >
+          <LineOne isOpen={isOpen}></LineOne>
+          <LineTwo isOpen={isOpen}></LineTwo>
+          <LineThree isOpen={isOpen}></LineThree>
         </HamburgerLines>
-        <MenuItems>
+
+        <MenuItems isOpen={isOpen}>
           <MenuItem>
             <MenuItemLink href="#home">Home</MenuItemLink>
           </MenuItem>
